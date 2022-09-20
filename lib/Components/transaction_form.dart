@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
 
-class TransactionForm extends StatelessWidget {
-  final textController = TextEditingController();
-  final valueController = TextEditingController();
-
+class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmit;
 
   TransactionForm(this.onSubmit);
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final textController = TextEditingController();
+
+  final valueController = TextEditingController();
 
   _submitForm() { //função criada para usuario apertar a confirmação no teclado e já adicionar uma nova transação
     final title = textController.text;
@@ -16,7 +22,7 @@ class TransactionForm extends StatelessWidget {
     if(title.isEmpty || value <=0){
       return;
     }
-    onSubmit(title, value);
+    widget.onSubmit(title, value);
   }
 
   @override
@@ -41,9 +47,42 @@ class TransactionForm extends StatelessWidget {
                   onSubmitted: (_) => _submitForm(),
               decoration: const InputDecoration(labelText: 'Valor'),
             ),
-            FlatButton(
-                child: Text('Nova transação'),
-                textColor: Color.fromARGB(255, 124, 0, 68),
+            Container(              
+              //height: 70,
+              child: Row(              
+                children: <Widget> [
+                 const Text('Nenhuma data Selecionada   ➤',
+                 style: TextStyle(
+                  fontFamily: 'SecularOne',
+                  fontSize: 12.6,
+                 ),
+                 ),
+                  Column(
+                    children: [
+                      FlatButton(
+                        textColor: Color.fromARGB(255, 128, 0, 128),
+                        child: const Text('Selecionar data',
+                        style: TextStyle(
+                          fontFamily: 'SecularOne',
+                          fontSize: 12.6
+                        ),
+                        ),                        
+                        onPressed: () { },
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            RaisedButton(
+              color: Colors.purple,
+                child: Text('Nova transação',
+                style: TextStyle(
+                fontSize: 14.5,
+                fontWeight: FontWeight.w700,
+                ),
+                ),
+                textColor: Color.fromARGB(255, 238, 238, 238),
                 onPressed: _submitForm,  
                 )
           ],
