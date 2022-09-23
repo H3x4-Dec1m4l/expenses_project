@@ -2,7 +2,7 @@ import 'package:expenses_project/Components/chart_bar.dart';
 import 'package:flutter/material.dart';
 import '../Models/transaction.dart';
 import 'package:intl/intl.dart';
-import '../main.dart';
+//import '../main.dart';
 class Chart extends StatelessWidget {
   final List<Transaction> recentsTransactions;
 
@@ -28,7 +28,7 @@ class Chart extends StatelessWidget {
 
       return {
         'Day': DateFormat.E().format(weekDay)[0],
-        'Value': 9.99,
+        'Value': totalSum,
       };
     }).reversed.toList();
   }
@@ -49,12 +49,12 @@ class Chart extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: groupedTransactions.map((tr) {
-            return Flexible(
+            return  Flexible(
               fit: FlexFit.tight,
               child: ChartBar(
                 label:  tr['Day'] as String,
                 value: tr['Value'] as double,
-                percentage: (tr['Value'] as double) / _weekTotalValue,             
+                percentage: _weekTotalValue == 0 ? 0 : (tr['Value'] as double) / _weekTotalValue,             
               ),
             );
           }).toList()),
